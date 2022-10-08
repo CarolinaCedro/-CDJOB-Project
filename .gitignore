@@ -11,3 +11,5 @@ HELP.md
 flyway.conf
 .mvn
 CDJOB-PROJECT.iml
+env
+.env
