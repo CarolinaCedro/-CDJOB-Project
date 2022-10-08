@@ -1,0 +1,12 @@
+# Maven
+log/
+target/
+.mvn*
+.idea*
+build*
+mvnw
+mvnw.cmd
+pom.xml
+HELP.md
+flyway.conf
+.mvn
