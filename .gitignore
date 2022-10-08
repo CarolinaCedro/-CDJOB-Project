@@ -13,3 +13,4 @@ flyway.conf
 CDJOB-PROJECT.iml
 env
 .env
+test/
