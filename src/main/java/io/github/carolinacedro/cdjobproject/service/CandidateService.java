@@ -1,9 +1,11 @@
 package io.github.carolinacedro.cdjobproject.service;
 
 import io.github.carolinacedro.cdjobproject.infra.entities.Candidate;
+
 import io.github.carolinacedro.cdjobproject.infra.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,22 @@ public class CandidateService {
     }
 
     public Candidate update(Candidate candidate, Long id) {
-        return repository.save(candidate);
+        Assert.notNull(id, "Não foi possivel atualizar o registro");
+        Optional<Candidate> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Candidate db = optional.get();
+            db.setEmail(candidate.getEmail());
+            db.setName(candidate.getName());
+            db.setPhone(candidate.getPhone());
+            db.setNote(candidate.getNote());
+            db.setState(candidate.getState());
+            repository.save(db);
+            return db;
+        }
+        return null;
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }
