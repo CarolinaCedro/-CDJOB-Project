@@ -8,7 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -21,41 +23,30 @@ public class Vacancy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "titlevacancy")
     private String titleVacancy;
     private String description;
-    private Status status;
+    private String status;
 
+//    @JsonIgnore
+//    @ManyToMany
+//    @JoinTable(name = "vacancy_has_candidate", joinColumns =
+//            {@JoinColumn(name = "vacancy_id")}, inverseJoinColumns =
+//            {@JoinColumn(name = "candidate_id")})
+//    private List<Candidate> candidates = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "vacancy_has_candidate", joinColumns =
-            {@JoinColumn(name = "vacancy_id")}, inverseJoinColumns =
-            {@JoinColumn(name = "candidate_id")})
-    private List<Candidate> candidates = new ArrayList<>();
-
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "responsibilitys_id", nullable = false)
-    private Responsibilitys responsibility;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "requiriments_id", nullable = false)
-    private Requiriments requiriments;
 
     @OneToMany
-    private List<Vacancy> vacancyList = new ArrayList<>();
+    private List<Responsibilitys> responsibility = new ArrayList<>();
 
-    @ManyToOne
-    private JoinVacancy joinVacancy;
+    @OneToMany
+    private List<Requiriments> requiriments = new ArrayList<>();
 
-    public Vacancy(String titleVacancy, String description, Status status, List<Candidate> candidates, Responsibilitys responsibility, Requiriments requiriments, List<Vacancy> vacancyList) {
+    public Vacancy(String titleVacancy, String description, String status, List<Responsibilitys> responsibility, List<Requiriments> requiriments) {
         this.titleVacancy = titleVacancy;
         this.description = description;
         this.status = status;
-        this.candidates = candidates;
         this.responsibility = responsibility;
         this.requiriments = requiriments;
-        this.vacancyList = vacancyList;
     }
 }

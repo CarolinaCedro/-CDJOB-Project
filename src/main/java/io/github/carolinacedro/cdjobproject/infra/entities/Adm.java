@@ -1,5 +1,6 @@
 package io.github.carolinacedro.cdjobproject.infra.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,4 @@ public class Adm {
     private String email;
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vacancy_id", nullable = false)
-    private Vacancy vacancyList;
 }

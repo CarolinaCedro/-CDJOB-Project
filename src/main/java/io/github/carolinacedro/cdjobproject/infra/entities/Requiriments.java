@@ -1,5 +1,6 @@
 package io.github.carolinacedro.cdjobproject.infra.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Requiriments {
     private Long id;
     private String description;
 
+    @JsonIgnore
     @OneToMany
     private List<Vacancy> vacancy;
 }

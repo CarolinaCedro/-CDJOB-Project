@@ -1,5 +1,6 @@
 package io.github.carolinacedro.cdjobproject.infra.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,8 @@ public class Responsibilitys {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+
+    @JsonIgnore
     @OneToMany
     private List<Vacancy> vacancy;
 }

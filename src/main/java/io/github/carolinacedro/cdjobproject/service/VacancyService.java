@@ -21,4 +21,8 @@ public class VacancyService {
     public Optional findById(Long id) {
         return repository.findById(id);
     }
+
+    public Vacancy save(Vacancy vacancy) {
+        return repository.save(vacancy);
+    }
 }
