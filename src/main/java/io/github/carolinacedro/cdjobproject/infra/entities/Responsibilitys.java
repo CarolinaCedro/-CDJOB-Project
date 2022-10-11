@@ -1,11 +1,13 @@
 package io.github.carolinacedro.cdjobproject.infra.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.github.carolinacedro.cdjobproject.infra.dto.ResponsabilitysDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,15 +15,25 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Responsibilitys {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
 
-    @JsonIgnore
-    @OneToMany
-    private List<Vacancy> vacancy;
+    public static List<Responsibilitys> of(List<ResponsabilitysDto> responsabilitysDto) {
+        List<Responsibilitys> responsibilitys = new ArrayList<>();
+        responsabilitysDto.forEach(res -> {
+
+            Responsibilitys responsibilitysConvert = Responsibilitys.builder()
+                    .description(res.getDescription())
+                    .build();
+
+            responsibilitys.add(responsibilitysConvert);
+        });
+        return responsibilitys;
+    }
 }
 
 

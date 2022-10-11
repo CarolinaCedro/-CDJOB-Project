@@ -1,5 +1,7 @@
 package io.github.carolinacedro.cdjobproject.api;
 
+import io.github.carolinacedro.cdjobproject.infra.dto.RequirementsDto;
+import io.github.carolinacedro.cdjobproject.infra.dto.ResponsabilitysDto;
 import io.github.carolinacedro.cdjobproject.infra.dto.VacancyDto;
 import io.github.carolinacedro.cdjobproject.infra.entities.*;
 import io.github.carolinacedro.cdjobproject.infra.repository.CandidateRepository;
@@ -35,28 +37,27 @@ public class VacancyController {
 
 
     @GetMapping
-    public ResponseEntity findAll(){
+    public ResponseEntity findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable Long id){
+    public ResponseEntity findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody @Valid VacancyDto vacancyDto){
+    public ResponseEntity save(@RequestBody @Valid VacancyDto vacancyDto) {
 
-        Optional<Responsibilitys> responsibilitys = responsibilitysRepository.findById(vacancyDto.getResponsibility());
-        Optional<Requiriments> requiriments = requirimentsRepository.findById(vacancyDto.getRequiriments());
+        List<ResponsabilitysDto> responsibiLitysListDto = vacancyDto.getResponsibility();
+        List<RequirementsDto> requirimentsListDto = vacancyDto.getRequiriments();
 
+        List<Responsibilitys> responsibilitys = Responsibilitys.of(responsibiLitysListDto);
+        List<Requiriments> requiriments = Requiriments.of(requirimentsListDto);
 
-        List<Responsibilitys> responsibilitysList = List.of(responsibilitys.get());
-        List<Requiriments> requirimentsList = List.of(requiriments.get());
 
         Vacancy vacancy = new Vacancy(
-                        vacancyDto.getTitleVacancy(), vacancyDto.getDescription(), vacancyDto.getStatus(),
-                responsibilitysList, requirimentsList
+                vacancyDto.getTitleVacancy(), vacancyDto.getDescription(), vacancyDto.getStatus()
                 );
 
         Vacancy save = service.save(vacancy);
@@ -70,21 +71,6 @@ public class VacancyController {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(id).toUri();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

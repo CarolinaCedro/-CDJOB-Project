@@ -18,6 +18,6 @@ public class VacancyDto {
     private String titleVacancy;
     private String description;
     private String status;
-    private List<Responsibilitys> responsibility;
-    private List<Requiriments> requiriments;
+    private List<ResponsabilitysDto> responsibility;
+    private List<RequirementsDto> requiriments;
 }

@@ -1,11 +1,15 @@
 package io.github.carolinacedro.cdjobproject.infra.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.github.carolinacedro.cdjobproject.infra.dto.RequirementsDto;
+import io.github.carolinacedro.cdjobproject.infra.dto.ResponsabilitysDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table
+@Builder
 public class Requiriments {
 
     @Id
@@ -20,7 +25,16 @@ public class Requiriments {
     private Long id;
     private String description;
 
-    @JsonIgnore
-    @OneToMany
-    private List<Vacancy> vacancy;
+    public static List<Requiriments> of(List<RequirementsDto> requirementsDto) {
+        List<Requiriments> requiriments = new ArrayList<>();
+        requirementsDto.forEach(res -> {
+
+            Requiriments requirimentsConvert = Requiriments.builder()
+                    .description(res.getDescription())
+                    .build();
+
+            requiriments.add(requirimentsConvert);
+        });
+        return requiriments;
+    }
 }
