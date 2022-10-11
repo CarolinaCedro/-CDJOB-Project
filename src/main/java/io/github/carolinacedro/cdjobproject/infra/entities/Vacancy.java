@@ -36,10 +36,10 @@ public class Vacancy {
 //    private List<Candidate> candidates = new ArrayList<>();
 
 
-    @OneToMany
+    @ManyToMany
     private List<Responsibilitys> responsibility = new ArrayList<>();
 
-    @OneToMany
+    @ManyToMany
     private List<Requiriments> requiriments = new ArrayList<>();
 
     public Vacancy(String titleVacancy, String description, String status, List<Responsibilitys> responsibility, List<Requiriments> requiriments) {

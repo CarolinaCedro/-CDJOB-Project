@@ -16,6 +16,10 @@ public class ResponsabilitiesServices {
     private ResponsibilitysRepository responsibilitysRepository;
 
 
+    public List<Responsibilitys> findAll() {
+        return responsibilitysRepository.findAll();
+    }
+
     public ResponsabilitysDto save(ResponsabilitysDto dto){
         Responsibilitys saved = responsibilitysRepository
                 .save(Responsibilitys.of(List.of(dto)).get(0));
@@ -29,4 +33,6 @@ public class ResponsabilitiesServices {
 
         return ResponsabilitysDto.of(find);
     }
+
+
 }

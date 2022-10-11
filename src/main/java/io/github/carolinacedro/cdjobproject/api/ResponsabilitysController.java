@@ -11,15 +11,18 @@ import org.springframework.web.bind.annotation.*;
 public class ResponsabilitysController {
 
     @Autowired
-    private ResponsabilitiesServices services;
+    private ResponsabilitiesServices service;
 
-    @PostMapping()
-    ResponseEntity<?> save(@RequestBody ResponsabilitysDto dto){
-        return ResponseEntity.ok(services.save(dto));
-    }
+    @GetMapping
+    ResponseEntity<?>findAll(){return ResponseEntity.ok(service.findAll());}
 
     @GetMapping("/{id}")
     ResponseEntity<?> findById(@PathVariable Long id){
-        return ResponseEntity.ok(services.findById(id));
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @PostMapping()
+    ResponseEntity<?> save(@RequestBody ResponsabilitysDto dto){
+        return ResponseEntity.ok(service.save(dto));
     }
 }
