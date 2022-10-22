@@ -25,4 +25,8 @@ public class VacancyService {
     public Vacancy save(Vacancy vacancy) {
         return repository.save(vacancy);
     }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }

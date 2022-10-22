@@ -18,7 +18,8 @@ public class VacancyDto {
     private String titleVacancy;
     private String description;
     private String status;
-    private List<Long> responsibility;
+//    private List<Long> responsibility;
+    private String responsibility;
     private List<Long> requiriments;
 
     public static VacancyDto of(Vacancy vacancy){
@@ -27,8 +28,8 @@ public class VacancyDto {
                 .description(vacancy.getDescription())
                 .status(vacancy.getStatus())
                 .description(vacancy.getDescription())
+                .responsibility(vacancy.getResponsibility())
                 .requiriments(getRequirimentesIds(RequirementsDto.of(vacancy.getRequiriments())))
-                .responsibility(getResponsibilityIds(ResponsabilitysDto.listOf(vacancy.getResponsibility())))
                 .build();
     }
 
@@ -41,12 +42,12 @@ public class VacancyDto {
         return ids;
     }
 
-    private static List<Long> getResponsibilityIds(List<ResponsabilitysDto> dto){
-        List<Long> ids = new ArrayList<>();
-
-        dto.forEach(x -> {
-            ids.add(x.getId());
-        });
-        return ids;
-    }
+//    private static List<Long> getResponsibilityIds(List<ResponsabilitysDto> dto){
+//        List<Long> ids = new ArrayList<>();
+//
+//        dto.forEach(x -> {
+//            ids.add(x.getId());
+//        });
+//        return ids;
+//    }
 }

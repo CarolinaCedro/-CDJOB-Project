@@ -37,4 +37,8 @@ public class Requiriments {
         });
         return requiriments;
     }
+
+    public Requiriments(String description) {
+        this.description = description;
+    }
 }

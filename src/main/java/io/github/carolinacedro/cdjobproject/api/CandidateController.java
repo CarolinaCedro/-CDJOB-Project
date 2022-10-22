@@ -44,12 +44,11 @@ public class CandidateController {
     public ResponseEntity save(@RequestBody @Valid CandidateDto candidateDto) {
 
         Optional<Vacancy> vacancys = vacancyRepository.findById(candidateDto.getVacancy());
-        Optional<JoinVacancy> join = joinVacancyRepository.findById(candidateDto.getJoinVacancy());
+//        List<Vacancy> vacancyList = List.of(vacancys.get());
 
-        List<Vacancy> vacancyList = List.of(vacancys.get());
         Candidate candidate = new Candidate(
                 candidateDto.getName(), candidateDto.getEmail(), candidateDto.getPhone(), candidateDto.getNote(),
-                candidateDto.getState(), vacancyList,join.get());
+                candidateDto.getState(), vacancys.get());
 
         Candidate save = service.save(candidate);
         URI location = getUri(candidate.getId());

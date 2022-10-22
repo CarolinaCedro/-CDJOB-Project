@@ -28,7 +28,6 @@ public class CandidateDto {
     @NotBlank
     @Size(max = 255)
     private String note;
-
     private Long vacancy;
-    private Long joinVacancy;
+
 }

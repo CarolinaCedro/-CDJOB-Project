@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,6 +30,8 @@ public class Vacancy {
     private String description;
     private String status;
 
+    private String responsibility;
+
 //    @JsonIgnore
 //    @ManyToMany
 //    @JoinTable(name = "vacancy_has_candidate", joinColumns =
@@ -36,13 +40,15 @@ public class Vacancy {
 //    private List<Candidate> candidates = new ArrayList<>();
 
 
-    @ManyToMany
-    private List<Responsibilitys> responsibility = new ArrayList<>();
+//    @ManyToMany
+//    private List<Responsibilitys> responsibility = new ArrayList<>();
+
 
     @ManyToMany
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Requiriments> requiriments = new ArrayList<>();
 
-    public Vacancy(String titleVacancy, String description, String status, List<Responsibilitys> responsibility, List<Requiriments> requiriments) {
+    public Vacancy(String titleVacancy, String description, String status, String responsibility, List<Requiriments> requiriments) {
         this.titleVacancy = titleVacancy;
         this.description = description;
         this.status = status;
