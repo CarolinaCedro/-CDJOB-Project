@@ -1,8 +1,10 @@
 package io.github.carolinacedro.cdjobproject.api;
 
+import io.github.carolinacedro.cdjobproject.infra.dto.AdminDTO;
 import io.github.carolinacedro.cdjobproject.infra.entities.Adm;
 import io.github.carolinacedro.cdjobproject.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +30,9 @@ public class AdminController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Adm adm) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity save(@RequestBody AdminDTO adminDTO) {
+        Adm adm = new Adm(adminDTO.getName(), adminDTO.getEmail(), adminDTO.getPassword());
         return ResponseEntity.ok(service.save(adm));
     }
 

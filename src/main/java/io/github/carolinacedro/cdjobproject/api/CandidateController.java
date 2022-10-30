@@ -2,7 +2,6 @@ package io.github.carolinacedro.cdjobproject.api;
 
 import io.github.carolinacedro.cdjobproject.infra.dto.CandidateDto;
 import io.github.carolinacedro.cdjobproject.infra.entities.Candidate;
-import io.github.carolinacedro.cdjobproject.infra.entities.JoinVacancy;
 import io.github.carolinacedro.cdjobproject.infra.entities.Vacancy;
 import io.github.carolinacedro.cdjobproject.infra.repository.JoinVacancyRepository;
 import io.github.carolinacedro.cdjobproject.infra.repository.VacancyRepository;
@@ -44,11 +43,13 @@ public class CandidateController {
     public ResponseEntity save(@RequestBody @Valid CandidateDto candidateDto) {
 
         Optional<Vacancy> vacancys = vacancyRepository.findById(candidateDto.getVacancy());
-//        List<Vacancy> vacancyList = List.of(vacancys.get());
+        List<Vacancy> vacancyList = List.of(vacancys.get());
 
         Candidate candidate = new Candidate(
-                candidateDto.getName(), candidateDto.getEmail(), candidateDto.getPhone(), candidateDto.getNote(),
-                candidateDto.getState(), vacancys.get());
+                candidateDto.getVacancy(), candidateDto.getName(), candidateDto.getPhone(),
+                candidateDto.getEmail(), candidateDto.getState(), candidateDto.getNote(),
+                vacancyList
+                );
 
         Candidate save = service.save(candidate);
         URI location = getUri(candidate.getId());

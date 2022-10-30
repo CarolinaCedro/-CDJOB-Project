@@ -42,12 +42,4 @@ public class VacancyDto {
         return ids;
     }
 
-//    private static List<Long> getResponsibilityIds(List<ResponsabilitysDto> dto){
-//        List<Long> ids = new ArrayList<>();
-//
-//        dto.forEach(x -> {
-//            ids.add(x.getId());
-//        });
-//        return ids;
-//    }
 }

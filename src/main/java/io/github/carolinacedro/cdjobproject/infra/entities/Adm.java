@@ -20,4 +20,9 @@ public class Adm {
     private String email;
     private String password;
 
+    public Adm(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }

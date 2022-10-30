@@ -32,18 +32,6 @@ public class Vacancy {
 
     private String responsibility;
 
-//    @JsonIgnore
-//    @ManyToMany
-//    @JoinTable(name = "vacancy_has_candidate", joinColumns =
-//            {@JoinColumn(name = "vacancy_id")}, inverseJoinColumns =
-//            {@JoinColumn(name = "candidate_id")})
-//    private List<Candidate> candidates = new ArrayList<>();
-
-
-//    @ManyToMany
-//    private List<Responsibilitys> responsibility = new ArrayList<>();
-
-
     @ManyToMany
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Requiriments> requiriments = new ArrayList<>();
