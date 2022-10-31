@@ -1,5 +1,6 @@
 package io.github.carolinacedro.cdjobproject.service;
 
+import io.github.carolinacedro.cdjobproject.infra.dto.CandidateDto;
 import io.github.carolinacedro.cdjobproject.infra.entities.Candidate;
 
 import io.github.carolinacedro.cdjobproject.infra.repository.CandidateRepository;
@@ -9,25 +10,26 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CandidateService {
 
     @Autowired
     private CandidateRepository repository;
-    public List<Candidate> findAll() {
-        return repository.findAll();
+    public List<CandidateDto> findAll() {
+        return repository.findAll().stream().map(CandidateDto::create).collect(Collectors.toList());
     }
 
-    public Optional<Candidate> findById(Long id) {
-        return repository.findById(id);
+    public Optional<CandidateDto> findById(Long id) {
+        return repository.findById(id).map(CandidateDto::create);
     }
 
-    public Candidate save(Candidate candidate) {
-        return repository.save(candidate);
+    public CandidateDto save(Candidate candidate) {
+        return CandidateDto.create(candidate);
     }
 
-    public Candidate update(Candidate candidate, Long id) {
+    public CandidateDto update(Candidate candidate, Long id) {
         Assert.notNull(id, "Não foi possivel atualizar o registro");
         Optional<Candidate> optional = repository.findById(id);
         if (optional.isPresent()) {
@@ -38,7 +40,7 @@ public class CandidateService {
             db.setNote(candidate.getNote());
             db.setState(candidate.getState());
             repository.save(db);
-            return db;
+            return CandidateDto.create(db);
         }
         return null;
     }

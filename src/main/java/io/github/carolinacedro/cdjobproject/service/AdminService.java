@@ -3,6 +3,7 @@ package io.github.carolinacedro.cdjobproject.service;
 import io.github.carolinacedro.cdjobproject.infra.dto.AdminDTO;
 import io.github.carolinacedro.cdjobproject.infra.entities.Adm;
 import io.github.carolinacedro.cdjobproject.infra.repository.AdminRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -16,6 +17,9 @@ public class AdminService {
 
     @Autowired
     private AdminRepository repository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     public List<AdminDTO> getAdmin() {
         return repository.findAll().stream().map(AdminDTO::create).collect(Collectors.toList());

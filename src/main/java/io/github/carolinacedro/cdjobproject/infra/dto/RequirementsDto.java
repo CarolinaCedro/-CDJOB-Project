@@ -1,9 +1,11 @@
 package io.github.carolinacedro.cdjobproject.infra.dto;
 
+import io.github.carolinacedro.cdjobproject.infra.entities.Candidate;
 import io.github.carolinacedro.cdjobproject.infra.entities.Requiriments;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,11 @@ public class RequirementsDto {
            listToReturn.add(dto);
        });
        return listToReturn;
+    }
+
+    public static RequirementsDto create(Requiriments requiriments) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(requiriments, RequirementsDto.class);
     }
 
 }

@@ -35,8 +35,8 @@ public class CandidateController {
 
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable Long id) {
-        Optional<Candidate> candidate = service.findById(id);
-        return ResponseEntity.ok(candidate);
+        Optional<CandidateDto> candidate = service.findById(id);
+        return candidate.isPresent() ? ResponseEntity.ok(candidate): ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -51,7 +51,7 @@ public class CandidateController {
                 vacancyList
                 );
 
-        Candidate save = service.save(candidate);
+        CandidateDto save = service.save(candidate);
         URI location = getUri(candidate.getId());
         return ResponseEntity.created(location).build();
 
@@ -60,7 +60,7 @@ public class CandidateController {
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid Candidate candidate) {
         candidate.setId(id);
-        Candidate c = service.update(candidate, id);
+        CandidateDto c = service.update(candidate, id);
         return c != null ?
                 ResponseEntity.ok(c) :
                 ResponseEntity.notFound().build();
@@ -68,7 +68,7 @@ public class CandidateController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
-        Optional<Candidate> candidate = service.findById(id);
+        Optional<CandidateDto> candidate = service.findById(id);
         if (candidate.isPresent()) {
             service.delete(id);
             return ResponseEntity.noContent().build();
