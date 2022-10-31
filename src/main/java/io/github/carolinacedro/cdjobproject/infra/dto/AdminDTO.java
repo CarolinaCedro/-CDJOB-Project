@@ -1,16 +1,12 @@
 package io.github.carolinacedro.cdjobproject.infra.dto;
 
+import io.github.carolinacedro.cdjobproject.infra.entities.Adm;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.modelmapper.ModelMapper;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+@Data
 public class AdminDTO {
 
     @NotBlank
@@ -20,4 +16,9 @@ public class AdminDTO {
     private String email;
     @NotBlank
     private String password;
+
+    public static AdminDTO create(Adm adm) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(adm, AdminDTO.class);
+    }
 }

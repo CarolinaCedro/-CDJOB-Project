@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,13 +19,13 @@ public class AdminController {
     private AdminService service;
 
     @GetMapping
-    public ResponseEntity findAll() {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity <List<AdminDTO>> findAll() {
+        return ResponseEntity.ok(service.getAdmin());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable Long id) {
-        Optional<Adm> adm = service.findById(id);
+        Optional<AdminDTO> adm = service.findById(id);
         return adm.isPresent() ? ResponseEntity.ok(adm) :
                 ResponseEntity.notFound().build();
     }
@@ -40,9 +41,9 @@ public class AdminController {
     public ResponseEntity update(@PathVariable Long id, @RequestBody Adm adm) {
         adm.setId(id);
 
-        Adm adm1 = service.update(id, adm);
+        AdminDTO adm1 = service.update(id, adm);
 
-        return adm1 != null ? ResponseEntity.ok(adm1) :
+        return adm1 != null ? ResponseEntity.noContent().build() :
                 ResponseEntity.notFound().build();
     }
 
