@@ -20,9 +20,9 @@ public class VacancyDto {
     private String titleVacancy;
     private String description;
     private String status;
-//    private List<Long> responsibility;
     private String responsibility;
     private List<Long> requiriments;
+    private Long vacancy;
 
 //    public static VacancyDto of(Vacancy vacancy){
 //        return VacancyDto.builder()
@@ -36,7 +36,12 @@ public class VacancyDto {
 //    }
 
     public static VacancyDto create(Vacancy vacancy) {
+
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.typeMap(Vacancy.class, VacancyDto.class).addMappings(mapper -> {
+                    mapper.map(Vacancy::getId, VacancyDto::setVacancy);
+                }
+        );
         return modelMapper.map(vacancy, VacancyDto.class);
     }
 
