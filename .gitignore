@@ -4,13 +4,3 @@ target/
 .mvn*
 .idea*
 build*
-mvnw
-mvnw.cmd
-pom.xml
-HELP.md
-flyway.conf
-.mvn
-CDJOB-PROJECT.iml
-env
-.env
-test/
