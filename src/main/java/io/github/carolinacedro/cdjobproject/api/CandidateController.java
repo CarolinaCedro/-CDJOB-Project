@@ -9,11 +9,11 @@ import io.github.carolinacedro.cdjobproject.service.CandidateService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,27 +27,27 @@ public class CandidateController {
 
     @Autowired
     private JoinVacancyRepository joinVacancyRepository;
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping
     public ResponseEntity findAll() {
         return ResponseEntity.ok(service.findAll());
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable Long id) {
         Optional<CandidateDto> candidate = service.findById(id);
         return candidate.isPresent() ? ResponseEntity.ok(candidate): ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid CandidateDto candidateDto) {
 
-//        Optional<Vacancy> vacancys = vacancyRepository.findById(candidateDto.getVacancy());
-//        List<Vacancy> vacancyList = List.of(vacancys.get());
+        Optional<Vacancy> vacancys = vacancyRepository.findById(candidateDto.getVacancy());
 
         Candidate candidate = new Candidate(
                  candidateDto.getName(), candidateDto.getPhone(),
-                candidateDto.getEmail(), candidateDto.getState(), candidateDto.getNote()
+                candidateDto.getEmail(), candidateDto.getState(), candidateDto.getNote(),vacancys.get()
                 );
 
         service.save(candidate);
@@ -55,7 +55,7 @@ public class CandidateController {
         return ResponseEntity.created(location).build();
 
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid Candidate candidate) {
         candidate.setId(id);
@@ -65,6 +65,7 @@ public class CandidateController {
                 ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Optional<CandidateDto> candidate = service.findById(id);

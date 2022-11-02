@@ -24,16 +24,17 @@ public class Candidate {
     private String state;
     private String note;
 
-    @JsonIgnore
-    @ManyToMany
-    private List<Vacancy> vacancy;
+
+    @OneToOne
+    private Vacancy vacancy;
 
 
-    public Candidate(String name, String phone, String email, String state, String note) {
+    public Candidate(String name, String phone, String email, String state, String note, Vacancy vacancy) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.state = state;
         this.note = note;
+        this.vacancy = vacancy;
     }
 }

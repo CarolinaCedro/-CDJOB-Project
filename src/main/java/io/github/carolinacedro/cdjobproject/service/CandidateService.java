@@ -1,11 +1,8 @@
 package io.github.carolinacedro.cdjobproject.service;
 
 import io.github.carolinacedro.cdjobproject.infra.dto.CandidateDto;
-import io.github.carolinacedro.cdjobproject.infra.dto.VacancyDto;
-import io.github.carolinacedro.cdjobproject.infra.entities.Adm;
 import io.github.carolinacedro.cdjobproject.infra.entities.Candidate;
 
-import io.github.carolinacedro.cdjobproject.infra.entities.Vacancy;
 import io.github.carolinacedro.cdjobproject.infra.repository.CandidateRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +21,9 @@ public class CandidateService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<CandidateDto> findAll() {
-        return repository.findAll().stream().map(this::candidateDto).collect(Collectors.toList());
+    public List<Candidate> findAll() {
+        return repository.findAll();
+//        return repository.findAll().stream().map(this::candidateDto).collect(Collectors.toList());
     }
 
     public Optional<CandidateDto> findById(Long id) {
@@ -59,4 +57,5 @@ public class CandidateService {
     private CandidateDto candidateDto(Candidate candidate) {
         return modelMapper.map(candidate, CandidateDto.class);
     }
+
 }
