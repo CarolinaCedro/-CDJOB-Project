@@ -4,3 +4,5 @@ target/
 .mvn*
 .idea*
 build*
+.env
+src/main/resources

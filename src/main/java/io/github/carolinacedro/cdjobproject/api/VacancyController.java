@@ -48,7 +48,7 @@ public class VacancyController {
                         vacancyDto.getResponsibility(),
                         requiriments);
 
-        return ResponseEntity.ok(VacancyDto.create(service.save(vacancy)));
+        return ResponseEntity.ok(VacancyDto.of(service.save(vacancy)));
  }
     private URI getUri(Long id) {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

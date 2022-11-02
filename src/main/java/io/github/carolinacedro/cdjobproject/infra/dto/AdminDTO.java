@@ -7,8 +7,11 @@ import lombok.*;
 import org.modelmapper.ModelMapper;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AdminDTO {
 
+    private Long id;
     @NotBlank
     private String name;
     @NotBlank
@@ -17,8 +20,9 @@ public class AdminDTO {
     @NotBlank
     private String password;
 
-    public static AdminDTO create(Adm adm) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(adm, AdminDTO.class);
+    public AdminDTO(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 }

@@ -42,16 +42,15 @@ public class CandidateController {
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid CandidateDto candidateDto) {
 
-        Optional<Vacancy> vacancys = vacancyRepository.findById(candidateDto.getVacancy());
-        List<Vacancy> vacancyList = List.of(vacancys.get());
+//        Optional<Vacancy> vacancys = vacancyRepository.findById(candidateDto.getVacancy());
+//        List<Vacancy> vacancyList = List.of(vacancys.get());
 
         Candidate candidate = new Candidate(
-                candidateDto.getVacancy(), candidateDto.getName(), candidateDto.getPhone(),
-                candidateDto.getEmail(), candidateDto.getState(), candidateDto.getNote(),
-                vacancyList
+                 candidateDto.getName(), candidateDto.getPhone(),
+                candidateDto.getEmail(), candidateDto.getState(), candidateDto.getNote()
                 );
 
-        CandidateDto save = service.save(candidate);
+        service.save(candidate);
         URI location = getUri(candidate.getId());
         return ResponseEntity.created(location).build();
 

@@ -18,11 +18,11 @@ public class AdminController {
 
     @Autowired
     private AdminService service;
-
-
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity <List<AdminDTO>> findAll() {
+    public ResponseEntity<List<AdminDTO>> findAll() {
         return ResponseEntity.ok(service.getAdmin());
     }
 
@@ -36,7 +36,7 @@ public class AdminController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity save(@RequestBody AdminDTO adminDTO) {
-        Adm adm = new Adm(adminDTO.getName(), adminDTO.getEmail(), adminDTO.getPassword());
+        AdminDTO adm = new AdminDTO(adminDTO.getName(), adminDTO.getEmail(), adminDTO.getPassword());
         return ResponseEntity.ok(service.save(adm));
     }
 
@@ -51,9 +51,11 @@ public class AdminController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+
 
 }

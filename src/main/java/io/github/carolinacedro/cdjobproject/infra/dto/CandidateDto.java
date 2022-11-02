@@ -35,13 +35,6 @@ public class CandidateDto {
     @NotBlank
     @Size(max = 255)
     private String note;
-
-    private  Long vacancy;
-
-    public static CandidateDto create(Candidate candidate) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(candidate, CandidateDto.class);
-    }
-
+//    private  Long vacancy;
 
 }

@@ -1,6 +1,7 @@
 package io.github.carolinacedro.cdjobproject.infra.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,16 @@ public class Candidate {
     private String state;
     private String note;
 
+    @JsonIgnore
     @ManyToMany
     private List<Vacancy> vacancy;
+
+
+    public Candidate(String name, String phone, String email, String state, String note) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.state = state;
+        this.note = note;
+    }
 }

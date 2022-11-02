@@ -24,25 +24,15 @@ public class VacancyDto {
     private List<Long> requiriments;
     private Long vacancy;
 
-//    public static VacancyDto of(Vacancy vacancy){
-//        return VacancyDto.builder()
-//                .titleVacancy(vacancy.getTitleVacancy())
-//                .description(vacancy.getDescription())
-//                .status(vacancy.getStatus())
-//                .description(vacancy.getDescription())
-//                .responsibility(vacancy.getResponsibility())
-//                .requiriments(getRequirimentesIds(RequirementsDto.of(vacancy.getRequiriments())))
-//                .build();
-//    }
-
-    public static VacancyDto create(Vacancy vacancy) {
-
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.typeMap(Vacancy.class, VacancyDto.class).addMappings(mapper -> {
-                    mapper.map(Vacancy::getId, VacancyDto::setVacancy);
-                }
-        );
-        return modelMapper.map(vacancy, VacancyDto.class);
+    public static VacancyDto of(Vacancy vacancy){
+        return VacancyDto.builder()
+                .titleVacancy(vacancy.getTitleVacancy())
+                .description(vacancy.getDescription())
+                .status(vacancy.getStatus())
+                .description(vacancy.getDescription())
+                .responsibility(vacancy.getResponsibility())
+                .requiriments(getRequirimentesIds(RequirementsDto.of(vacancy.getRequiriments())))
+                .build();
     }
 
     private static List<Long> getRequirimentesIds(List<RequirementsDto> dto){
