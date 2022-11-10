@@ -18,9 +18,9 @@ public class JoinVacancy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private  List<Candidate> candidate;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Vacancy> vacancy;
 }

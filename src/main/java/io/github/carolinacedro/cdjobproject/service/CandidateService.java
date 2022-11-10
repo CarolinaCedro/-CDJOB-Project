@@ -26,8 +26,8 @@ public class CandidateService {
 //        return repository.findAll().stream().map(this::candidateDto).collect(Collectors.toList());
     }
 
-    public Optional<CandidateDto> findById(Long id) {
-        return repository.findById(id).map(this::candidateDto);
+    public Optional<Candidate> findById(Long id) {
+        return repository.findById(id);
     }
 
     public Candidate save(Candidate candidate) {
@@ -54,8 +54,10 @@ public class CandidateService {
         repository.deleteById(id);
     }
 
+
     private CandidateDto candidateDto(Candidate candidate) {
         return modelMapper.map(candidate, CandidateDto.class);
     }
+
 
 }

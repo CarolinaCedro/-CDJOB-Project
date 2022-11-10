@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class VacancyDto {
     private String status;
     private String responsibility;
     private List<Long> requiriments;
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Long vacancy;
 
     public static VacancyDto of(Vacancy vacancy){

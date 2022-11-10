@@ -16,8 +16,8 @@ import java.util.UUID;
 @Setter
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column (unique = true)
     private String username;
     private String password;

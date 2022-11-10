@@ -32,8 +32,8 @@ public class Vacancy {
 
     private String responsibility;
 
-    @ManyToMany
-    @OnDelete(action = OnDeleteAction.CASCADE)
+
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Requiriments> requiriments = new ArrayList<>();
 
     public Vacancy(String titleVacancy, String description, String status, String responsibility, List<Requiriments> requiriments) {

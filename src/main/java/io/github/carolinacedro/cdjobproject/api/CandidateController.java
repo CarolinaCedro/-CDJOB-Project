@@ -27,15 +27,18 @@ public class CandidateController {
 
     @Autowired
     private JoinVacancyRepository joinVacancyRepository;
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping
     public ResponseEntity findAll() {
         return ResponseEntity.ok(service.findAll());
     }
+
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable Long id) {
-        Optional<CandidateDto> candidate = service.findById(id);
+        Optional<Candidate> candidate = service.findById(id);
         return candidate.isPresent() ? ResponseEntity.ok(candidate): ResponseEntity.notFound().build();
     }
 
@@ -68,13 +71,15 @@ public class CandidateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
-        Optional<CandidateDto> candidate = service.findById(id);
-        if (candidate.isPresent()) {
-            service.delete(id);
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.notFound().build();
+//        Optional<CandidateDto> candidate = service.findById(id);
+//        if (candidate.isPresent()) {
+//            service.delete(id);
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.notFound().build();
+        service.delete(id);
+       return ResponseEntity.noContent().build();
     }
 
 

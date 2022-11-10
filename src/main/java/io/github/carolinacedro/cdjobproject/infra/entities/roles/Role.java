@@ -18,8 +18,8 @@ public class Role implements GrantedAuthority,Serializable {
     private static final long seriaVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID roleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long roleId;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false,unique = true)
     private RoleName roleName;
