@@ -58,26 +58,23 @@ public class CandidateController {
         return ResponseEntity.created(location).build();
 
     }
+
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid Candidate candidate) {
         candidate.setId(id);
-        CandidateDto c = service.update(candidate, id);
+        Candidate c = service.update(candidate, id);
         return c != null ?
                 ResponseEntity.ok(c) :
                 ResponseEntity.notFound().build();
     }
 
+
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
-//        Optional<CandidateDto> candidate = service.findById(id);
-//        if (candidate.isPresent()) {
-//            service.delete(id);
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.notFound().build();
         service.delete(id);
        return ResponseEntity.noContent().build();
     }

@@ -34,7 +34,7 @@ public class CandidateService {
         return repository.save(candidate);
     }
 
-    public CandidateDto update(Candidate candidate, Long id) {
+    public Candidate update(Candidate candidate, Long id) {
         Assert.notNull(id, "Não foi possivel atualizar o registro");
         Optional<Candidate> optional = repository.findById(id);
         if (optional.isPresent()) {
@@ -45,7 +45,7 @@ public class CandidateService {
             db.setNote(candidate.getNote());
             db.setState(candidate.getState());
             repository.save(db);
-            return this.candidateDto(db);
+            return db;
         }
         return null;
     }
