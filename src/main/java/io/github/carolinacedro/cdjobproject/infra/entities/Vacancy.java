@@ -29,7 +29,6 @@ public class Vacancy {
     private String titleVacancy;
     private String description;
     private String status;
-
     private String responsibility;
 
 

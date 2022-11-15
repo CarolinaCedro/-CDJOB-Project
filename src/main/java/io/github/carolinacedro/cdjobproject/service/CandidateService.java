@@ -21,31 +21,31 @@ public class CandidateService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<Candidate> findAll() {
-        return repository.findAll();
-//        return repository.findAll().stream().map(this::candidateDto).collect(Collectors.toList());
+    public List<CandidateDto> findAll() {
+        return repository.findAll().stream().map(this::candidateDto).collect(Collectors.toList());
     }
 
-    public Optional<Candidate> findById(Long id) {
-        return repository.findById(id);
+    public Optional<CandidateDto> findById(Long id) {
+        return repository.findById(id).map(this::candidateDto);
     }
 
-    public Candidate save(Candidate candidate) {
-        return repository.save(candidate);
+    public Candidate save(CandidateDto candidateDto) {
+        Candidate saveCandidate = modelMapper.map(candidateDto, Candidate.class);
+        return repository.save(saveCandidate);
     }
 
-    public Candidate update(Candidate candidate, Long id) {
+    public CandidateDto update(CandidateDto candidateDto, Long id) {
         Assert.notNull(id, "Não foi possivel atualizar o registro");
         Optional<Candidate> optional = repository.findById(id);
         if (optional.isPresent()) {
             Candidate db = optional.get();
-            db.setEmail(candidate.getEmail());
-            db.setName(candidate.getName());
-            db.setPhone(candidate.getPhone());
-            db.setNote(candidate.getNote());
-            db.setState(candidate.getState());
+            db.setEmail(candidateDto.getEmail());
+            db.setName(candidateDto.getName());
+            db.setPhone(candidateDto.getPhone());
+            db.setNote(candidateDto.getNote());
+            db.setState(candidateDto.getState());
             repository.save(db);
-            return db;
+            return this.candidateDto(db);
         }
         return null;
     }
@@ -58,6 +58,5 @@ public class CandidateService {
     private CandidateDto candidateDto(Candidate candidate) {
         return modelMapper.map(candidate, CandidateDto.class);
     }
-
 
 }

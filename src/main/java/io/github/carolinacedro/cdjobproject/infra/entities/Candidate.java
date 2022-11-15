@@ -2,6 +2,7 @@ package io.github.carolinacedro.cdjobproject.infra.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.github.carolinacedro.cdjobproject.infra.dto.VacancyResponseDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

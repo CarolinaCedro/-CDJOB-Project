@@ -22,7 +22,7 @@ public class AdminController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<AdminDTO>> findAll() {
+    public ResponseEntity findAll() {
         return ResponseEntity.ok(service.getAdmin());
     }
 
@@ -41,11 +41,9 @@ public class AdminController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody Adm adm) {
-        adm.setId(id);
-
-        AdminDTO adm1 = service.update(id, adm);
-
+    public ResponseEntity update(@PathVariable Long id, @RequestBody AdminDTO adminDTO) {
+        adminDTO.setId(id);
+        AdminDTO adm1 = service.update(id, adminDTO);
         return adm1 != null ? ResponseEntity.noContent().build() :
                 ResponseEntity.notFound().build();
     }

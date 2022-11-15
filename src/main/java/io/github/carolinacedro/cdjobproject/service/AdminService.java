@@ -29,21 +29,19 @@ public class AdminService {
         return repository.findById(id).map(this::adminDTO);
     }
 
-
     public Adm save(AdminDTO adminDTO) {
-        Adm adm = new Adm(adminDTO.getName(), adminDTO.getEmail(), adminDTO.getPassword());
+        Adm adm = modelMapper.map(adminDTO,Adm.class);
         return repository.save(adm);
     }
 
-    public AdminDTO update(Long id, Adm adm) {
+    public AdminDTO update(Long id, AdminDTO adminDTO) {
         Assert.notNull(id, "Não foi possivel atualizar o registro");
         Optional<Adm> optional = repository.findById(id);
         if (optional.isPresent()) {
             Adm db = optional.get();
-            db.setEmail(adm.getEmail());
-            db.setName(adm.getName());
-            db.setPassword(adm.getPassword());
-
+            db.setEmail(adminDTO.getEmail());
+            db.setName(adminDTO.getName());
+            db.setPassword(adminDTO.getPassword());
             repository.save(db);
             return this.adminDTO(db);
         }

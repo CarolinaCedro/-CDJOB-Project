@@ -19,32 +19,38 @@ import java.util.List;
 @Builder
 public class VacancyDto {
 
+    private Long id;
     private String titleVacancy;
     private String description;
     private String status;
     private String responsibility;
-    private List<Long> requiriments;
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Long vacancy;
+    private static List<Requiriments> requiriments = new ArrayList<>();
 
-    public static VacancyDto of(Vacancy vacancy){
-        return VacancyDto.builder()
-                .titleVacancy(vacancy.getTitleVacancy())
-                .description(vacancy.getDescription())
-                .status(vacancy.getStatus())
-                .description(vacancy.getDescription())
-                .responsibility(vacancy.getResponsibility())
-                .requiriments(getRequirimentesIds(RequirementsDto.of(vacancy.getRequiriments())))
-                .build();
-    }
+//    private Long vacancy;
 
-    private static List<Long> getRequirimentesIds(List<RequirementsDto> dto){
-        List<Long> ids = new ArrayList<>();
+//    public static VacancyDto of(Vacancy vacancy){
+//        return VacancyDto.builder()
+//                .titleVacancy(vacancy.getTitleVacancy())
+//                .description(vacancy.getDescription())
+//                .status(vacancy.getStatus())
+//                .description(vacancy.getDescription())
+//                .responsibility(vacancy.getResponsibility())
+//                .requiriments(getRequirimentesIds(RequirementsDto.of(vacancy.getRequiriments())))
+//                .build();
+//    }
 
-        dto.forEach(x -> {
-            ids.add(x.getId());
+    public static List<Requiriments> getRequirements(List<RequirementsDto> dto){
+
+
+        dto.forEach(res -> {
+
+            Requiriments requirimentsConvert = Requiriments.builder()
+                    .description(res.getDescription())
+                    .build();
+
+            requiriments.add(requirimentsConvert);
         });
-        return ids;
+        return requiriments;
     }
 
 }

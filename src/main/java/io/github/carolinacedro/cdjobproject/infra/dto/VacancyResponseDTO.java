@@ -14,8 +14,6 @@ public class VacancyResponseDTO {
     private String titleVacancy;
     private String description;
     private String status;
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ResponsabilitysDto> responsibility;
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<RequirementsDto> requiriments;
 }

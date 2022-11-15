@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "User")
 @Getter
 @Setter
-public class User {
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,4 +29,28 @@ public class User {
     private List<Role> roles;
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

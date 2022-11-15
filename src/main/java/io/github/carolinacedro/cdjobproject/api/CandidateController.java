@@ -1,12 +1,14 @@
 package io.github.carolinacedro.cdjobproject.api;
 
 import io.github.carolinacedro.cdjobproject.infra.dto.CandidateDto;
+import io.github.carolinacedro.cdjobproject.infra.dto.VacancyDto;
 import io.github.carolinacedro.cdjobproject.infra.entities.Candidate;
 import io.github.carolinacedro.cdjobproject.infra.entities.Vacancy;
 import io.github.carolinacedro.cdjobproject.infra.repository.JoinVacancyRepository;
 import io.github.carolinacedro.cdjobproject.infra.repository.VacancyRepository;
 import io.github.carolinacedro.cdjobproject.service.CandidateService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,6 +30,9 @@ public class CandidateController {
     @Autowired
     private JoinVacancyRepository joinVacancyRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping
     public ResponseEntity findAll() {
@@ -38,45 +43,50 @@ public class CandidateController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable Long id) {
-        Optional<Candidate> candidate = service.findById(id);
-        return candidate.isPresent() ? ResponseEntity.ok(candidate): ResponseEntity.notFound().build();
+        Optional<CandidateDto> candidate = service.findById(id);
+        return candidate.isPresent() ? ResponseEntity.ok(candidate) : ResponseEntity.notFound().build();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid CandidateDto candidateDto) {
 
-        Optional<Vacancy> vacancys = vacancyRepository.findById(candidateDto.getVacancy());
+        Optional<Vacancy> vacancys = vacancyRepository.findById(candidateDto.getVacancy().getId());
 
-        Candidate candidate = new Candidate(
-                 candidateDto.getName(), candidateDto.getPhone(),
-                candidateDto.getEmail(), candidateDto.getState(), candidateDto.getNote(),vacancys.get()
-                );
+        if (vacancys.isPresent()) {
 
-        service.save(candidate);
-        URI location = getUri(candidate.getId());
-        return ResponseEntity.created(location).build();
+            Candidate candidate = new Candidate(
+                    candidateDto.getName(), candidateDto.getPhone(),
+                    candidateDto.getEmail(), candidateDto.getState(), candidateDto.getNote(), vacancys.get()
+            );
+
+            CandidateDto CandidateDto = modelMapper.map(candidate, CandidateDto.class);
+            service.save(CandidateDto);
+            URI location = getUri(candidate.getId());
+            return ResponseEntity.created(location).build();
+        }
+
+        return ResponseEntity.notFound().build();
 
     }
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid Candidate candidate) {
-        candidate.setId(id);
-        Candidate c = service.update(candidate, id);
+    public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid CandidateDto candidateDto) {
+        candidateDto.setId(id);
+        CandidateDto c = service.update(candidateDto, id);
         return c != null ?
                 ResponseEntity.ok(c) :
                 ResponseEntity.notFound().build();
     }
 
 
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         service.delete(id);
-       return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
     }
 
 
