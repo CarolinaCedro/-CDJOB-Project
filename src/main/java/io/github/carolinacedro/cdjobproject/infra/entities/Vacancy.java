@@ -1,18 +1,13 @@
 package io.github.carolinacedro.cdjobproject.infra.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.github.carolinacedro.cdjobproject.infra.entities.enums.Status;
+import io.github.carolinacedro.cdjobproject.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Data
@@ -28,17 +23,18 @@ public class Vacancy {
     @Column(name = "titlevacancy")
     private String titleVacancy;
     private String description;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    private Status status;
     private String responsibility;
-
-
     @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Requiriments> requiriments = new ArrayList<>();
 
-    public Vacancy(String titleVacancy, String description, String status, String responsibility, List<Requiriments> requiriments) {
+
+    public Vacancy(String titleVacancy, String description, Status status, String responsibility, List<Requiriments> requiriments) {
         this.titleVacancy = titleVacancy;
         this.description = description;
-        this.status = status;
+        this.status = Status.Ativo;
         this.responsibility = responsibility;
         this.requiriments = requiriments;
     }

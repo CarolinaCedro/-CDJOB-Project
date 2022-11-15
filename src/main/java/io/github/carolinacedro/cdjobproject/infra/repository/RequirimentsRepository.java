@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface RequirimentsRepository extends JpaRepository<Requiriments,Long> {
-    List<Requiriments> findAllByIdIn(List<Long> id);
+    List<Requiriments> findAllByIdIn(List<Requiriments> id);
 }

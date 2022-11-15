@@ -25,24 +25,24 @@ public class Requiriments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+
     @ManyToMany
-    private List<Requiriments> requiriments;
+    private static List<Requiriments> requiriments = new ArrayList<>();
 
 
-//    public static List<Requiriments> of(List<RequirementsDto> requirementsDto) {
-//        List<Requiriments> requiriments = new ArrayList<>();
-//        requirementsDto.forEach(res -> {
-//
-//            Requiriments requirimentsConvert = Requiriments.builder()
-//                    .description(res.getDescription())
-//                    .build();
-//
-//            requiriments.add(requirimentsConvert);
-//        });
-//        return requiriments;
-//    }
-//
-//    public Requiriments(String description) {
-//        this.description = description;
-//    }
+    public static List<Requiriments> of(List<RequirementsDto> requirementsDto) {
+        requirementsDto.forEach(res -> {
+
+            Requiriments requirimentsConvert = Requiriments.builder()
+                    .description(res.getDescription())
+                    .build();
+
+            requiriments.add(requirimentsConvert);
+        });
+        return requiriments;
+    }
+
+    public Requiriments(String description) {
+        this.description = description;
+    }
 }

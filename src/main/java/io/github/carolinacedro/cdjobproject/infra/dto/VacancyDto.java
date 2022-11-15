@@ -1,14 +1,13 @@
 package io.github.carolinacedro.cdjobproject.infra.dto;
 
-import io.github.carolinacedro.cdjobproject.infra.entities.Requiriments;
+import io.github.carolinacedro.cdjobproject.enums.Status;
 import io.github.carolinacedro.cdjobproject.infra.entities.Vacancy;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,35 +21,31 @@ public class VacancyDto {
     private Long id;
     private String titleVacancy;
     private String description;
-    private String status;
+    private Status status;
     private String responsibility;
-    private static List<Requiriments> requiriments = new ArrayList<>();
+    public List<Long> requiriments;
 
-//    private Long vacancy;
-
-//    public static VacancyDto of(Vacancy vacancy){
-//        return VacancyDto.builder()
-//                .titleVacancy(vacancy.getTitleVacancy())
-//                .description(vacancy.getDescription())
-//                .status(vacancy.getStatus())
-//                .description(vacancy.getDescription())
-//                .responsibility(vacancy.getResponsibility())
-//                .requiriments(getRequirimentesIds(RequirementsDto.of(vacancy.getRequiriments())))
-//                .build();
-//    }
-
-    public static List<Requiriments> getRequirements(List<RequirementsDto> dto){
-
-
-        dto.forEach(res -> {
-
-            Requiriments requirimentsConvert = Requiriments.builder()
-                    .description(res.getDescription())
-                    .build();
-
-            requiriments.add(requirimentsConvert);
-        });
-        return requiriments;
+    public static VacancyDto of(Vacancy vacancy) {
+        return VacancyDto.builder()
+                .titleVacancy(vacancy.getTitleVacancy())
+                .description(vacancy.getDescription())
+                .status(vacancy.getStatus())
+                .responsibility(vacancy.getResponsibility())
+                .requiriments(getRequirimentesIds(RequirementsDto.of(vacancy.getRequiriments())))
+                .build();
     }
 
+
+
+
+    private static List<Long> getRequirimentesIds(List<RequirementsDto> dto) {
+        List<Long> ids = new ArrayList<>();
+        dto.forEach(x -> {
+            ids.add(x.getId());
+        });
+        return ids;
+
+    }
 }
+
+
